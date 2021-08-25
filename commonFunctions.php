@@ -95,7 +95,7 @@ if (!function_exists("FridgeItemsArrayGet"))
                     if (!empty($valuesfinal))
                     {
                         $final_list_array[reset($values) ][] = $valuesfinal; //first array get
-                        
+
                     }
                 }
             }
@@ -244,7 +244,19 @@ if (!function_exists("pastDateItemsRemove"))
         {
             return array(
                 'status' => 'false',
-                'message' => "Order {$name_recip} not prepare because recipe '$name_recip' is past dated"
+                'message' => '<div class="container">
+        <div class="row">
+          <div class="col-sm-4 py-2">
+                          <div class="card text-white bg-danger">
+                              <div class="card-body">
+                                  <h4 class="card-title">Orders details</h4>
+                                  <p class="card-text">Order '.$name_recip.' not prepare because recipe "'.$name_recip.'" is past dated</p>
+                                  <span class="btn btn-outline-light">Failed</span>
+                              </div>
+                          </div>
+                      </div>
+            </div>
+          </div>'
             );
         }
         else

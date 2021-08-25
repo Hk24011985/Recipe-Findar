@@ -62,10 +62,7 @@ if (!empty($_POST))
             if ($recipies_json_status)
             {
                 $recipies_jsons = recipeFunctionalitySteps($recipies_json, $final_list_array);
-                //If some items are back date remove that item and make new array for that we will prepare food
-                echo '<pre>';
-
-                print_r($recipies_jsons);
+              
             }
 
         }
@@ -73,7 +70,28 @@ if (!empty($_POST))
         {
             echo "There is some issue to upload the file please check";
         }
-        die('----------Script-end-here------------');
+    ?>
+
+    <div class="container">
+        <div class="row">
+          <?php if(!empty($recipies_jsons)){
+                  foreach($recipies_jsons as $values){
+          ?>
+            <div class="col-sm-4 py-2">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h4 class="card-title">Order's details</h4>
+                        <p class="card-text">Your order '<?php echo $values['name'] ?>' is being prepare.</p>
+                        <span class="btn btn-outline-light">Success</span>
+                    </div>
+                </div>
+            </div>
+          <?php } } ?>
+        </div>
+    </div>
+
+      <?php
+        die;
     }
 }
 ?>

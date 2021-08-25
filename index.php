@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Recipies Order</title>
+  </head>
+  <body>
+
+<?php
+//checking all the errors here
+//ini_set('display_errors', '1');
+//ini_set('display_startup_errors', '1');
+//error_reporting(E_ALL);
+// Submit the form here and checking for the same
+if (!empty($_POST))
+{
+
+    require_once ('./commonFunctions.php');
+    $list_items = !empty($_FILES['list_items']['name']) ? $_FILES['list_items']['name'] : '';
+    $gradiants_items = !empty($_FILES['gradiants_items']['name']) ? $_FILES['gradiants_items']['name'] : '';
+
+    //checking for empty file value
+    $files_results = checkEmptyFiles($list_items, $gradiants_items);
+    //If files names not empty
+    if ($files_results)
+    {
+        $errors = CheckFilesExtentions($list_items, $gradiants_items);
+    }
+    if (!empty($errors))
+    {
+        foreach ($errors as $values)
+        {
+            echo '<p class="text-danger">' . $values . '</p><br>';
+        }
+
+    }
+    else
+    {
+        // fetching data to uploaded files
+        $tempItem = $_FILES["list_items"]["tmp_name"];
+        $tempGradiant = $_FILES["gradiants_items"]["tmp_name"];
+        $target_dir = "./uploads/";
+        //Uploading file to destination
+        $uploadFileResponse = uploadFilesToDestination($list_items, $gradiants_items, $tempItem, $tempGradiant, $target_dir);
+        //If both the files uploaded to the destination
+        if ($uploadFileResponse)
+        {
+
+            $final_list_array = FridgeItemsArrayGet($target_dir, $list_items);
+            // Second file data getting here
+            $recipiesFile = $target_dir . basename($gradiants_items);
+            $recipies_json = recipesOrderArrayGet($recipiesFile);
+
+            //Checking for json data(Empty or Not)
+            $recipies_json_status = CheckOrdesList($recipies_json);
+
+            if ($recipies_json_status)
+            {
+                $recipies_jsons = recipeFunctionalitySteps($recipies_json, $final_list_array);
+                //If some items are back date remove that item and make new array for that we will prepare food
+                echo '<pre>';
+                print_r($recipies_jsons);
+            }
+
+        }
+        else
+        {
+            echo "There is some issue to upload the file please check";
+        }
+        die('----------Script-end-here------------');
+    }
+}
+?>
+  <div class="container-fluid mt-4">
+      <div class="row">
+        <section class="col md-7">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="col-lg-4 offset-lg-2 text-primary" >Recipee Management</h3>
+                  <form  method="post" action="" name="recipe_form" enctype="multipart/form-data" class="col-lg-6 offset-lg-3 mt-4">
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1">List Items *(<span class="text-danger">.Csv file</span>)</label>
+                      <input type="file" required class="form-control-file" id="items" name="list_items" accept=".csv">
+                      <span id="items_message" class="text-danger"> Only csv file accepted </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlFile1">Gradiants Items *(<span class="text-danger">.Json file</span>)</label>
+                      <input type="file" required class="form-control-file" id="gradiants" name="gradiants_items" accept=".json" >
+                      <span id="gradiant_message" class="text-danger"> Only Json file accepted </span>
+                    </div>
+
+                <button type="submit" class="btn btn-primary mb-5" name="submit" id="submit">Submit</button>
+                </form>
+              </div>
+            </div>
+        </section>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ <!--Js common including here--->
+   <script src="./common.js"></script>
+  </body>
+</html>

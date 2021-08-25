@@ -35,7 +35,7 @@ if (!function_exists("CheckFilesExtentions"))
         //Checking for files extentions here
         if (!empty($ext_gradiants_items) && strtolower($ext_gradiants_items != 'json'))
         {
-            $errors[] = 'List items can take only Json format';
+            $errors[] = 'Ingradiants items can take only Json format';
         }
         return $errors;
     }

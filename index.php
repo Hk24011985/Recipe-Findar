@@ -55,6 +55,7 @@ if (!empty($_POST))
             $recipiesFile = $target_dir . basename($gradiants_items);
             $recipies_json = recipesOrderArrayGet($recipiesFile);
 
+
             //Checking for json data(Empty or Not)
             $recipies_json_status = CheckOrdesList($recipies_json);
 
@@ -63,6 +64,7 @@ if (!empty($_POST))
                 $recipies_jsons = recipeFunctionalitySteps($recipies_json, $final_list_array);
                 //If some items are back date remove that item and make new array for that we will prepare food
                 echo '<pre>';
+
                 print_r($recipies_jsons);
             }
 
@@ -88,7 +90,7 @@ if (!empty($_POST))
                       <span id="items_message" class="text-danger"> Only csv file accepted </span>
                     </div>
                     <div class="form-group">
-                      <label for="exampleFormControlFile1">Gradiants Items *(<span class="text-danger">.Json file</span>)</label>
+                      <label for="exampleFormControlFile1">Ingradiants Items *(<span class="text-danger">.Json file</span>)</label>
                       <input type="file" required class="form-control-file" id="gradiants" name="gradiants_items" accept=".json" >
                       <span id="gradiant_message" class="text-danger"> Only Json file accepted </span>
                     </div>

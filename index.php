@@ -100,7 +100,7 @@ if (!empty($_POST))
         <section class="col md-7">
           <div class="card mb-3">
             <div class="card-body">
-              <h3 class="col-lg-4 offset-lg-2 text-primary" >Recipee Management</h3>
+              <h3 class="col-lg-4 offset-lg-2 text-primary" >Recipe Management</h3>
                   <form  method="post" action="" name="recipe_form" enctype="multipart/form-data" class="col-lg-6 offset-lg-3 mt-4">
                     <div class="form-group">
                       <label for="exampleFormControlFile1">List Items *(<span class="text-danger">.Csv file</span>)</label>

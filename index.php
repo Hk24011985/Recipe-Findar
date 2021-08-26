@@ -58,11 +58,21 @@ if (!empty($_POST))
 
             //Checking for json data(Empty or Not)
             $recipies_json_status = CheckOrdesList($recipies_json);
-
             if ($recipies_json_status)
             {
                 $recipies_jsons = recipeFunctionalitySteps($recipies_json, $final_list_array);
               
+            }else{ 
+              
+              echo '<div class="container">
+                    	<div class="row">
+                    		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                    			<div class="card-header">Oops!!</div>
+                    			<div class="card-body">
+                    				<h5 class="card-title">Order takeout.</h5> </div>
+                    		</div>
+                    	</div>
+                    </div>';
             }
 
         }
@@ -80,8 +90,8 @@ if (!empty($_POST))
             <div class="col-sm-4 py-2">
                 <div class="card text-white bg-primary">
                     <div class="card-body">
-                        <h4 class="card-title">Order's details</h4>
-                        <p class="card-text">Your order '<?php echo $values['name'] ?>' is being prepare.</p>
+                        <h4 class="card-title">Order details</h4>
+                        <p class="card-text">Your order '<?php echo $values['name'] ?>' is being prepared.</p>
                         <span class="btn btn-outline-light">Success</span>
                     </div>
                 </div>

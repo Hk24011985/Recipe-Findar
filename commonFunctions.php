@@ -249,8 +249,8 @@ if (!function_exists("pastDateItemsRemove"))
           <div class="col-sm-4 py-2">
                           <div class="card text-white bg-danger">
                               <div class="card-body">
-                                  <h4 class="card-title">Orders details</h4>
-                                  <p class="card-text">Order '.$name_recip.' not prepare because recipe "'.$name_recip.'" is past dated</p>
+                                  <h4 class="card-title">Order details</h4>
+                                  <p class="card-text">Order '.$name_recip.' not prepare because recipe "'.$item_to_search.'" is past dated</p>
                                   <span class="btn btn-outline-light">Failed</span>
                               </div>
                           </div>

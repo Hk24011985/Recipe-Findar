@@ -60,10 +60,11 @@ if (!empty($_POST))
             $recipies_json_status = CheckOrdesList($recipies_json);
             if ($recipies_json_status)
             {
-                $recipies_jsons = recipeFunctionalitySteps($recipies_json, $final_list_array);
-              
-            }else{ 
-              
+                $array = recipeFunctionalitySteps($recipies_json, $final_list_array);
+                //working here
+
+            }else{
+
               echo '<div class="container">
                     	<div class="row">
                     		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -84,8 +85,8 @@ if (!empty($_POST))
 
     <div class="container">
         <div class="row">
-          <?php if(!empty($recipies_jsons)){
-                  foreach($recipies_jsons as $values){
+          <?php if(!empty($array)){
+                  foreach($array as $values){
           ?>
             <div class="col-sm-4 py-2">
                 <div class="card text-white bg-primary">

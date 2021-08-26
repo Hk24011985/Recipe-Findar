@@ -136,7 +136,7 @@ if (!function_exists("recipeFunctionalitySteps"))
 {
     function recipeFunctionalitySteps($recipies_json = '', $final_list_array = '')
     {
-
+      
         foreach ($recipies_json as $k => $values)
         {
 
@@ -149,13 +149,15 @@ if (!function_exists("recipeFunctionalitySteps"))
             if ($IngradiantsStatus['status'] == 'true')
             {
 
-                foreach ($ingradiants_array as $values)
+                foreach ($ingradiants_array as $key=>$values)
                 {
 
                     $fridgeItemStatus = CheckItemExistInFridge($final_list_array, $values['item']);
+                    //Push used by date to array
+                    $recipies_json[$k]['ingredients'][$key]['used-By'] = $final_list_array[$values['item']][3];
 
                     if ($fridgeItemStatus['status'] == 'true')
-                    { //checking for dates [3]
+                    {   //checking for dates [3]
                         $pastDateStatus = pastDateItemsRemove($final_list_array, $values['item'], $name_recip);
                         //Checking ingradiants used by date
                         if ($pastDateStatus['status'] == 'false')
@@ -270,4 +272,11 @@ if (!function_exists("pastDateItemsRemove"))
     }
 }
 
+function pr($data){
+  
+  echo "<pre>";
+      print_r($data);
+   echo "</pre>";
+
+}
 ?>

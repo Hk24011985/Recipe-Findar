@@ -55,15 +55,49 @@ if (!empty($_POST))
             $recipiesFile = $target_dir . basename($gradiants_items);
             $recipies_json = recipesOrderArrayGet($recipiesFile);
 
-
             //Checking for json data(Empty or Not)
             $recipies_json_status = CheckOrdesList($recipies_json);
             if ($recipies_json_status)
             {
                 $array = recipeFunctionalitySteps($recipies_json, $final_list_array);
-                //working here
+                //pr($array);
+                // Ordering ingredients date wise
+                $array_final = array();
+                if(!empty($array)){
+                      foreach($array as $k1=>$part){
+                          $array     = $part['ingredients'];
+                          for( $j=0;  $j < count($array)-1; $j++)
+                            {
+                                if($array[$j]["used-By"] > $array[$j+1]["used-By"])
+                                {
+                                           $temp = $array[$j];
+                                           $array[$j] = $array[$j+1];
+                                           $array[$j+1]=$temp;
 
-            }else{
+                                           $array_final[$k1]['name'] = $part['name'];
+                                           $array_final[$k1]['ingredients'] = $array;
+                                }else{
+                                          //$array_final[$k1]['name'] = $part['name'];
+                                          $array_final[$k1]['name'] = $part['name'];
+                                          $array_final[$k1]['ingredients'] = $array;
+                                }
+                            }
+                      }
+                     unset($array);
+                     $array = $array_final;
+
+                      for( $j=0;  $j < count($array)-1; $j++)
+                        {
+                            if (array_index_compare($array[$j]["ingredients"],$array[$j+1]["ingredients"]))
+                            {
+                                       $temp = $array[$j];
+                                       //swap the two between each other
+                                       $array[$j] = $array[$j+1];
+                                       $array[$j+1]=$temp;
+                            }
+                        }
+                }
+        }else{
 
               echo '<div class="container">
                     	<div class="row">
@@ -86,18 +120,19 @@ if (!empty($_POST))
     <div class="container">
         <div class="row">
           <?php if(!empty($array)){
+                  $count = 1;
                   foreach($array as $values){
           ?>
             <div class="col-sm-4 py-2">
                 <div class="card text-white bg-primary">
                     <div class="card-body">
                         <h4 class="card-title">Order details</h4>
-                        <p class="card-text">Your order '<?php echo $values['name'] ?>' is being prepared.</p>
+                        <p class="card-text">Your order '<?php echo $values['name'] ?>'[ Order No - <?php echo $count; ?> ]  is being prepared.</p>
                         <span class="btn btn-outline-light">Success</span>
                     </div>
                 </div>
             </div>
-          <?php } } ?>
+          <?php   $count++; } } ?>
         </div>
     </div>
 

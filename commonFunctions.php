@@ -136,7 +136,7 @@ if (!function_exists("recipeFunctionalitySteps"))
 {
     function recipeFunctionalitySteps($recipies_json = '', $final_list_array = '')
     {
-      
+
         foreach ($recipies_json as $k => $values)
         {
 
@@ -272,11 +272,28 @@ if (!function_exists("pastDateItemsRemove"))
     }
 }
 
-function pr($data){
-  
-  echo "<pre>";
-      print_r($data);
-   echo "</pre>";
+if (!function_exists("pr"))
+{
+    function pr($data){
+      echo "<pre>";
+          print_r($data);
+       echo "</pre>";
+    }
+}
 
+if (!function_exists("array_index_compare"))
+{
+  function array_index_compare($index1,$index2)
+    {
+        for ($i=0; $i < count($index1); $i++) {
+            for ($j=0; $j < count($index2); $j++) {
+              if($i == 0){ //first date was smallest so matchiong here
+                if($index1[$i]["used-By"] > $index2[$j]['used-By']){
+                    return true;
+                }
+              }
+            }
+        }
+    }
 }
 ?>

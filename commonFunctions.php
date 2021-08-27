@@ -159,8 +159,21 @@ if (!function_exists("recipeFunctionalitySteps"))
                 {
 
                     $fridgeItemStatus = CheckItemExistInFridge($final_list_array, $values['item']);
-                    //Push used by date to array
-                    $recipies_json[$k]['ingredients'][$key]['used-By'] = $final_list_array[$values['item']][3];
+                    //If ingradint not found in the Fridge items
+                    if(array_key_exists($values['item'],$final_list_array)){
+                      $recipies_json[$k]['ingredients'][$key]['used-By'] = $final_list_array[$values['item']][3];
+                    }else{
+                      echo '<div class="container">
+                            	<div class="row">
+                            		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                            			<div class="card-header">Oops!!</div>
+                            			<div class="card-body">
+                            				<h5 class="card-title">Order takeout.</h5> ingrediant <b>'.$values['item'].'</b> does not exist to the recipe <b>'.$name_recip.'</b></div>
+                            		</div>
+                            	</div>
+                            </div>';
+                           unset($recipies_json[$k]);
+                    }
 
                     if ($fridgeItemStatus['status'] == 'true')
                     {   //checking for dates [3]
@@ -172,12 +185,11 @@ if (!function_exists("recipeFunctionalitySteps"))
                             //Remove order from main array
                             unset($recipies_json[$k]);
                         }
-
                     }
                     else
                     {
                         //When no gradiant found in the kitchen
-                        echo !empty($fridgeItemStatus['message']) ? $fridgeItemStatus['message'] : '';
+                         !empty($fridgeItemStatus['message']) ? $fridgeItemStatus['message'] : '';
                     }
 
                 }
@@ -253,19 +265,19 @@ if (!function_exists("pastDateItemsRemove"))
             return array(
                 'status' => 'false',
                 'message' => '<div class="container">
-        <div class="row">
-          <div class="col-sm-4 py-2">
-                          <div class="card text-white bg-danger">
-                              <div class="card-body">
-                                  <h4 class="card-title">Order details</h4>
-                                  <p class="card-text">Order '.$name_recip.' not prepare because recipe "'.$item_to_search.'" is past dated</p>
-                                  <span class="btn btn-outline-light">Failed</span>
-                              </div>
-                          </div>
-                      </div>
-            </div>
-          </div>'
-            );
+                                <div class="row">
+                                  <div class="col-sm-4 py-2">
+                                                  <div class="card text-white bg-danger">
+                                                      <div class="card-body">
+                                                          <h4 class="card-title">Order details</h4>
+                                                          <p class="card-text">Order '.$name_recip.' not prepare because recipe "'.$item_to_search.'" is past dated</p>
+                                                          <span class="btn btn-outline-light">Failed</span>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                    </div>
+                                  </div>'
+                      );
         }
         else
         {

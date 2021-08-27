@@ -100,7 +100,7 @@ if (!empty($_POST))
                 <div class="card text-white bg-primary">
                     <div class="card-body">
                         <h4 class="card-title">Order details</h4>
-                        <p class="card-text">Your order '<?php echo $values['name'] ?>'[ Order No - <?php echo $count; ?> ]  is being prepared.</p>
+                        <p class="card-text">Your order <b>'<?php echo $values['name'] ?>' [ Order No - <?php echo $count; ?> ] </b> is being prepared.</p>
                         <span class="btn btn-outline-light">Success</span>
                     </div>
                 </div>

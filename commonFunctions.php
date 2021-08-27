@@ -90,6 +90,12 @@ if (!function_exists("FridgeItemsArrayGet"))
                 { //Removing heading section
                     continue;
                 }
+
+                if(!empty($values[3]) && !validateDate($values[3]) ){
+                  //die('Date is incorrect for '.$values[0].' please fix it.');
+                echo  '<div class="alert alert-danger" role="alert"> Date format is incorrect for Ingradiant <b>'.$values[0].' </b> please correct it.</div>';
+                  die;
+                }
                 foreach ($values as $valuesfinal)
                 {
                     if (!empty($valuesfinal))
@@ -304,6 +310,7 @@ if (!function_exists("SortingIngradiantsWithDate"))
     function SortingIngradiantsWithDate($array= array())
     {
               $array_final = array();
+              $p= 0;
               foreach($array as $k1=>$part){
                   $array     = $part['ingredients'];
                     for( $j=0;  $j < count($array)-1; $j++)
@@ -314,18 +321,19 @@ if (!function_exists("SortingIngradiantsWithDate"))
                                      $array[$j] = $array[$j+1];
                                      $array[$j+1]=$temp;
                                      //Creating new array for orders
-                                     $array_final[$k1]['name'] = $part['name'];
-                                     $array_final[$k1]['ingredients'] = $array;
+                                     $array_final[$p]['name'] = $part['name'];
+                                     $array_final[$p]['ingredients'] = $array;
                           }else{
 
-                                    $array_final[$k1]['name'] = $part['name'];
-                                    $array_final[$k1]['ingredients'] = $array;
+                                    $array_final[$p]['name'] = $part['name'];
+                                    $array_final[$p]['ingredients'] = $array;
                           }
                       }
+                      $p++;
               }
-              
+
               return $array_final;
-      
+
     }
 }
 
@@ -333,8 +341,8 @@ if (!function_exists("SortingIngradiantsWithDate"))
 if (!function_exists("SortingWholeMainArray"))
 {
     function SortingWholeMainArray($array= array())
-    { 
-      
+    {
+
       for( $j=0;  $j < count($array)-1; $j++)
         {
             if (array_index_compare($array[$j]["ingredients"],$array[$j+1]["ingredients"]))
@@ -346,6 +354,23 @@ if (!function_exists("SortingWholeMainArray"))
         }
         return $array;
     }
+}
+
+
+if (!function_exists("validateDate"))
+{
+    function validateDate($date,$format= 'Y-m-d')
+      {
+        $tempDate = explode('/', $date);
+        $day = ($tempDate[0]<10)?'0'.$tempDate[0]:$tempDate[0];
+        $month = ($tempDate[1]<10)?'0'.$tempDate[1]:$tempDate[1];
+        $year = $tempDate[2];
+        $final_date = $year.'-'.$month.'-'.$day;
+
+        $d = DateTime::createFromFormat($format, $final_date);
+          // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+          return $d && $d->format($format) === $final_date;
+      }
 }
 
 ?>

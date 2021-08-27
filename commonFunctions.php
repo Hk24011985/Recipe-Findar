@@ -296,4 +296,56 @@ if (!function_exists("array_index_compare"))
         }
     }
 }
+
+
+//Date-wise sorting to Ingradiants
+if (!function_exists("SortingIngradiantsWithDate"))
+{
+    function SortingIngradiantsWithDate($array= array())
+    {
+              $array_final = array();
+              foreach($array as $k1=>$part){
+                  $array     = $part['ingredients'];
+                    for( $j=0;  $j < count($array)-1; $j++)
+                      {
+                          if($array[$j]["used-By"] > $array[$j+1]["used-By"])
+                          {
+                                     $temp = $array[$j];
+                                     $array[$j] = $array[$j+1];
+                                     $array[$j+1]=$temp;
+                                     //Creating new array for orders
+                                     $array_final[$k1]['name'] = $part['name'];
+                                     $array_final[$k1]['ingredients'] = $array;
+                          }else{
+
+                                    $array_final[$k1]['name'] = $part['name'];
+                                    $array_final[$k1]['ingredients'] = $array;
+                          }
+                      }
+              }
+              
+              return $array_final;
+      
+    }
+}
+
+//Sorting to whole Main Array
+if (!function_exists("SortingWholeMainArray"))
+{
+    function SortingWholeMainArray($array= array())
+    { 
+      
+      for( $j=0;  $j < count($array)-1; $j++)
+        {
+            if (array_index_compare($array[$j]["ingredients"],$array[$j+1]["ingredients"]))
+            {
+                       $temp = $array[$j]; //swap the two between each other
+                       $array[$j] = $array[$j+1];
+                       $array[$j+1]=$temp;
+            }
+        }
+        return $array;
+    }
+}
+
 ?>

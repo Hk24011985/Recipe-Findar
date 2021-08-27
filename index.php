@@ -61,42 +61,14 @@ if (!empty($_POST))
             {
                 $array = recipeFunctionalitySteps($recipies_json, $final_list_array);
                 //pr($array);
-                // Ordering ingredients date wise
-                $array_final = array();
                 if(!empty($array)){
-                      foreach($array as $k1=>$part){
-                          $array     = $part['ingredients'];
-                          for( $j=0;  $j < count($array)-1; $j++)
-                            {
-                                if($array[$j]["used-By"] > $array[$j+1]["used-By"])
-                                {
-                                           $temp = $array[$j];
-                                           $array[$j] = $array[$j+1];
-                                           $array[$j+1]=$temp;
-
-                                           $array_final[$k1]['name'] = $part['name'];
-                                           $array_final[$k1]['ingredients'] = $array;
-                                }else{
-                                          //$array_final[$k1]['name'] = $part['name'];
-                                          $array_final[$k1]['name'] = $part['name'];
-                                          $array_final[$k1]['ingredients'] = $array;
-                                }
-                            }
-                      }
+                      // Ordering ingredients date wise in the array first
+                     $IngradiantsSortArray  = SortingIngradiantsWithDate($array);
+                     //pr($IngradiantsSortArray);
                      unset($array);
-                     $array = $array_final;
-                     //pr($array);
-
-                      for( $j=0;  $j < count($array)-1; $j++)
-                        {
-                            if (array_index_compare($array[$j]["ingredients"],$array[$j+1]["ingredients"]))
-                            {
-                                       $temp = $array[$j];
-                                       //swap the two between each other
-                                       $array[$j] = $array[$j+1];
-                                       $array[$j+1]=$temp;
-                            }
-                        }
+                     $array = $IngradiantsSortArray;
+                     //Ordering for whole Array Now only for first date final step
+                     $array =   SortingWholeMainArray($array);
                 }
         }else{
 

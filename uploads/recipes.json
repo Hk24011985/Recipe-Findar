@@ -2,11 +2,11 @@
  {
     "name" : "Grilled cheese on toast",
     "ingredients" : [
-		     {	
+		     {
            "item" : "bread",
 			     "amount" : 2,
 			     "unit" : "slices"
-		     },{	
+		     },{
       			"item" : "cheese",
       			"amount" : 2,
       			"unit" : "slices"
@@ -15,14 +15,28 @@
   },{
     	"name" : "Salad sandwich",
     	"ingredients" : [
-		     {	
+		     {
            "item" : "bread",
 			     "amount" : 2,
 			     "unit" : "slices"
-		     },{	
+		     },{
       			"item" : "mixed salad",
       			"amount" : 100,
       			"unit" : "grams"
+		     }
+		   ]
+  },
+  {
+    	"name" : "Egg-curry",
+    	"ingredients" : [
+		     {
+           "item" : "butter",
+			     "amount" : 250,
+			     "unit" : "grams"
+		     },{
+      			"item" : "cheese",
+      			"amount" : 3,
+      			"unit" : "slices"
 		     }
 		   ]
   }

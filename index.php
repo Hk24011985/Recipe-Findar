@@ -85,6 +85,7 @@ if (!empty($_POST))
                       }
                      unset($array);
                      $array = $array_final;
+                     //pr($array);
 
                       for( $j=0;  $j < count($array)-1; $j++)
                         {

@@ -61,18 +61,21 @@ if (!empty($_POST))
             {
                 $array = recipeFunctionalitySteps($recipies_json, $final_list_array);
                 //pr($array);
-                if(!empty($array)){
-                      // Ordering ingredients date wise in the array first
-                     $IngradiantsSortArray  = SortingIngradiantsWithDate($array);
-                     //pr($IngradiantsSortArray);
-                     unset($array);
-                     $array = $IngradiantsSortArray;
-                     //Ordering for whole Array Now only for first date final step
-                     $array =   SortingWholeMainArray($array);
+                if (!empty($array))
+                {
+                    // Ordering ingredients date wise in the array first
+                    $IngradiantsSortArray = SortingIngradiantsWithDate($array);
+                    //pr($IngradiantsSortArray);
+                    unset($array);
+                    $array = $IngradiantsSortArray;
+                    //Ordering for whole Array Now only for first date final step
+                    $array = SortingWholeMainArray($array);
                 }
-        }else{
+            }
+            else
+            {
 
-              echo '<div class="container">
+                echo '<div class="container">
                     	<div class="row">
                     		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
                     			<div class="card-header">Oops!!</div>
@@ -88,14 +91,16 @@ if (!empty($_POST))
         {
             echo "There is some issue to upload the file please check";
         }
-    ?>
+?>
 
     <div class="container">
         <div class="row">
-          <?php if(!empty($array)){
-                  $count = 1;
-                  foreach($array as $values){
-          ?>
+          <?php if (!empty($array))
+        {
+            $count = 1;
+            foreach ($array as $values)
+            {
+?>
             <div class="col-sm-4 py-2">
                 <div class="card text-white bg-primary">
                     <div class="card-body">
@@ -105,7 +110,9 @@ if (!empty($_POST))
                     </div>
                 </div>
             </div>
-          <?php   $count++; } } ?>
+          <?php $count++;
+            }
+        } ?>
         </div>
     </div>
 

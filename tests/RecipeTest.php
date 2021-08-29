@@ -53,6 +53,31 @@ class RecipeTest extends \PHPUnit\Framework\TestCase {
 
   }
 
+  public function testValidateDate(){
+    $dateToCheck = '31/8/2021';
+    $response     = validateDate($dateToCheck);
+    $this->assertTrue($response,"assert value is true or not");
+
+
+  //  $dateToCheck2 = '35/8/2021';
+  //  $response1     = validateDate($dateToCheck2);
+  //  $this->assertTrue($response1,"assert value is true or not");
+
+  }
+
+  public function testcountElements(){
+
+    $arrayValues = array('bread',10,'slice','31/8/2021');
+    $response     = countElements($arrayValues);
+    $this->assertEquals($response,1);
+
+
+    $arrayValues1 = array('bread','31/8/2021');
+    $response1     = countElements($arrayValues1);
+    $this->assertEquals($response1,0);
+
+  }
+
 
 
 

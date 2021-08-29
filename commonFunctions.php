@@ -96,17 +96,34 @@ if (!function_exists("FridgeItemsArrayGet"))
                 echo  '<div class="alert alert-danger" role="alert"> Date format is incorrect for Ingradiant <b>'.$values[0].' </b> please correct it.</div>';
                   die;
                 }
+
                 foreach ($values as $valuesfinal)
                 {
                     if (!empty($valuesfinal))
                     {
+
                         $final_list_array[reset($values) ][] = $valuesfinal; //first array get
 
                     }
                 }
             }
         }
-        return $final_list_array;
+
+     //count element validation to final array
+     $final_list_array2 = array();
+     if(!empty($final_list_array)){
+       foreach($final_list_array as $key=>$value){
+         $getResponseArrayCount = countElements($value);
+         if($getResponseArrayCount){
+            foreach($value as $k=>$values){
+              $final_list_array2[$key] = $value;
+            }
+         }else{
+             echo  '<div class="alert alert-danger" role="alert">  <b>'.$value[0].' </b> item row data is incorrect.</div>';
+         }
+       }
+     }
+        return $final_list_array2;
     }
 }
 
@@ -142,7 +159,6 @@ if (!function_exists("recipeFunctionalitySteps"))
 {
     function recipeFunctionalitySteps($recipies_json = '', $final_list_array = '')
     {
-
         foreach ($recipies_json as $k => $values)
         {
 
@@ -382,6 +398,19 @@ if (!function_exists("validateDate"))
         $d = DateTime::createFromFormat($format, $final_date);
           // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
           return $d && $d->format($format) === $final_date;
+      }
+}
+
+//Count Elements in each Row
+if (!function_exists("countElements"))
+{
+    function countElements($arrayElements= array())
+      {
+        if(count($arrayElements) == 4){
+          return true;
+        }else{
+          return false;
+        }
       }
 }
 

@@ -1,44 +1,49 @@
 # Recipe-Finder
-Recipe finder 
-#start date on 
+Recipe finder
+# Start date
 24-08-2021
 
-##ToDo 
-Sorting Orders by Date :
+# Steps :
 
-$j=0;
-$flag = true;
-$temp=0;
+-- Install Git in your system
+-- Install Xampp/Wamp Server
+-- Clone repository
+-- For phpUnit testing Install 'Composer' and update it
+-- Application path 'http://localhost/Recipe-Findar/'
 
-function array_index_compare($index1,$index2)
-{
+# Validation:
 
-    for ($i=0; $i < count($index1); $i++) {
-        for ($j=0; $j < count($index2); $j++) {
-            if($index1[$i]["used-By"] > $index2[$j]['used-By']){
-              return true;
-            }
+-- If ingredient not found in the list.
+-- If no order found.
+-- Valid date validation.
+-- Items counts in a row validation.
 
-        }
-    }
-}
+# Requirements
+  -- PHP 5+
+  -- PHPUnit 3.6+
 
- while ( $flag )
- {
-    $flag = false;
-    for( $j=0;  $j < count($array)-1; $j++)
-    {
-    
-        if (array_index_compare($array[$j]["ingredients"],$array[$j+1]["ingredients"]))
-        {
-                   $temp = $array[$j];
-                   //swap the two between each other
-                   $array[$j] = $array[$j+1];
-                   $array[$j+1]=$temp;
-                   $flag = true; //show that a swap occurred
-        
-        }
-    
-    }
+# How to run:
 
-}
+ -- Browse csv file for first input field
+ -- Browse Json file for second input field
+
+# Samples
+     (Sample files are in folder uploads/*)
+
+Path : http://localhost/Recipe-Findar/
+
+# Sample Images
+
+ Screenshots are available in Imgaes/* Folder
+
+# Test Cases :
+
+    PhpUnit test is used.
+    ex: php .\vendor\bin\phpunit <File path>
+
+Note : Sample files are in uploads/*
+
+## Some useful commands :
+
+1) composer require --dev phpunit/phpunit  //Install/Update PhpUnit
+2) php .\vendor\bin\phpunit .\tests\RecipeTest.php --color //Test cases run command

@@ -34,7 +34,7 @@ if (!function_exists("CheckFilesExtentions"))
         //Checking for files extentions here
         if (!empty($ext_gradiants_items) && strtolower($ext_gradiants_items != 'json'))
         {
-            $errors[] = 'Ingradiants items can take only Json format';
+            $errors[] = 'Ingredients items can take only Json format';
         }
         return $errors;
     }
@@ -93,7 +93,7 @@ if (!function_exists("FridgeItemsArrayGet"))
                 if (!empty($values[3]) && !validateDate($values[3]))
                 {
                     //die('Date is incorrect for '.$values[0].' please fix it.');
-                    echo '<div class="alert alert-danger" role="alert"> Date format is incorrect for Ingradiant <b>' . $values[0] . ' </b> please correct it.</div>';
+                    echo '<div class="alert alert-danger" role="alert"> Date format is incorrect for Ingredient <b>' . $values[0] . ' </b> please correct it.</div>';
                     die;
                 }
 
@@ -169,19 +169,19 @@ if (!function_exists("recipeFunctionalitySteps"))
         {
 
             $name_recip = !empty($values['name']) ? $values['name'] : '';
-            $ingradiants_array = !empty($values['ingredients']) ? $values['ingredients'] : array();
+            $ingredients_array = !empty($values['ingredients']) ? $values['ingredients'] : array();
 
-            //Check Ingradiants and item name
-            $IngradiantsStatus = IngradiantsExistOrNot($ingradiants_array, $name_recip);
+            //Check Ingredients and item name
+            $IngredientsStatus = IngrediantsExistOrNot($ingredients_array, $name_recip);
 
-            if ($IngradiantsStatus['status'] == 'true')
+            if ($IngredientsStatus['status'] == 'true')
             {
 
-                foreach ($ingradiants_array as $key => $values)
+                foreach ($ingredients_array as $key => $values)
                 {
 
                     $fridgeItemStatus = CheckItemExistInFridge($final_list_array, $values['item']);
-                    //If ingradint not found in the Fridge items
+                    //If ingredient not found in the Fridge items
                     if (array_key_exists($values['item'], $final_list_array))
                     {
                         $recipies_json[$k]['ingredients'][$key]['used-By'] = $final_list_array[$values['item']][3];
@@ -203,7 +203,7 @@ if (!function_exists("recipeFunctionalitySteps"))
                     if ($fridgeItemStatus['status'] == 'true')
                     { //checking for dates [3]
                         $pastDateStatus = pastDateItemsRemove($final_list_array, $values['item'], $name_recip);
-                        //Checking ingradiants used by date
+                        //Checking ingredients used by date
                         if ($pastDateStatus['status'] == 'false')
                         {
                             echo !empty($pastDateStatus['message']) ? $pastDateStatus['message'] : '';
@@ -221,7 +221,7 @@ if (!function_exists("recipeFunctionalitySteps"))
             }
             else
             {
-                echo !empty($IngradiantsStatus['message']) ? $IngradiantsStatus['message'] : '';
+                echo !empty($IngredientsStatus['message']) ? $IngredientsStatus['message'] : '';
             }
         }
 
@@ -230,12 +230,12 @@ if (!function_exists("recipeFunctionalitySteps"))
     }
 }
 
-//Ingradiants exist or not
-if (!function_exists("IngradiantsExistOrNot"))
+//Ingrediants exist or not
+if (!function_exists("IngrediantsExistOrNot"))
 {
-    function IngradiantsExistOrNot($ingradiants_array = array() , $name_recipe = '')
+    function IngrediantsExistOrNot($ingredients_array = array() , $name_recipe = '')
     {
-        if (!empty($ingradiants_array) && !empty($name_recipe))
+        if (!empty($ingredients_array) && !empty($name_recipe))
         {
             return array(
                 'status' => 'true',
@@ -246,7 +246,7 @@ if (!function_exists("IngradiantsExistOrNot"))
         {
             return array(
                 'status' => 'false',
-                'message' => "Ingradiants are missing."
+                'message' => "Ingredients are missing."
             );
         }
 
@@ -284,7 +284,7 @@ if (!function_exists("pastDateItemsRemove"))
 
         $date = str_replace('/', '-', $item_fridge_array[$item_to_search][3]);
         $date_format_change = date('Y-m-d', strtotime($date));
-        //Checking ingradiants used by date
+        //Checking ingredients used by date
         if ($date_format_change < date('Y-m-d'))
         {
             return array(
@@ -345,10 +345,10 @@ if (!function_exists("array_index_compare"))
     }
 }
 
-//Date-wise sorting to Ingradiants
-if (!function_exists("SortingIngradiantsWithDate"))
+//Date-wise sorting to Ingredients
+if (!function_exists("SortingIngredientsWithDate"))
 {
-    function SortingIngradiantsWithDate($array = array())
+    function SortingIngredientsWithDate($array = array())
     {
         $array_final = array();
         $p = 0;

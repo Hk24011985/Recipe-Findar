@@ -165,9 +165,8 @@ if (!function_exists("recipeFunctionalitySteps"))
 {
     function recipeFunctionalitySteps($recipies_json = '', $final_list_array = '')
     {
-        foreach ($recipies_json as $k => $values)
+      foreach ($recipies_json as $k => $values)
         {
-
             $name_recip = !empty($values['name']) ? $values['name'] : '';
             $ingredients_array = !empty($values['ingredients']) ? $values['ingredients'] : array();
 
@@ -176,13 +175,14 @@ if (!function_exists("recipeFunctionalitySteps"))
 
             if ($IngredientsStatus['status'] == 'true')
             {
-
-                foreach ($ingredients_array as $key => $values)
+              foreach ($ingredients_array as $key => $values)
                 {
-
                     $fridgeItemStatus = CheckItemExistInFridge($final_list_array, $values['item']);
+                    $amount = !empty( $values['amount'])?trim($values['amount']):'';
+                    $unit = !empty( $values['unit'])?strtolower(trim($values['unit'])):'';
+                    $csv_unit_vale = !empty($final_list_array[$values['item']][2])? strtolower( trim($final_list_array[$values['item']][2])):'';
                     //If ingredient not found in the Fridge items
-                    if (array_key_exists($values['item'], $final_list_array))
+                    if (array_key_exists($values['item'], $final_list_array) && $final_list_array[$values['item']][1] >= $amount && ( strpos($csv_unit_vale, $unit) !== false || strpos($unit,$csv_unit_vale) !== false ) )
                     {
                         $recipies_json[$k]['ingredients'][$key]['used-By'] = $final_list_array[$values['item']][3];
                     }
@@ -193,7 +193,7 @@ if (!function_exists("recipeFunctionalitySteps"))
                             		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
                             			<div class="card-header">Oops!!</div>
                             			<div class="card-body">
-                            				<h5 class="card-title">Order takeout.</h5> ingrediant <b>' . $values['item'] . '</b> does not exist to the recipe <b>' . $name_recip . '</b></div>
+                            				<h5 class="card-title">Order takeout.</h5> ingrediant <b>' . $values['item'] . '</b> does not exist to the recipe <b>' . $name_recip . ' OR check for Amount/Unit </b></div>
                             		</div>
                             	</div>
                             </div>';

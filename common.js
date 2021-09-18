@@ -28,5 +28,4 @@ $(function() {
             $('#gradiant_message').hide();
         }
     });
-
 });
